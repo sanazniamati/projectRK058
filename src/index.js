@@ -211,13 +211,15 @@ const initialTexts = [
 const App = () => {
   const [rectangles, setRectangles] = React.useState(initialRectangles);
   const [texts, setTexts] = React.useState(initialTexts);
-  const [selectedId, selectShape] = React.useState(null);
+  const [selectShapeId, setSelectShapeId] = React.useState(null);
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
+    // console.log(e.target);
+    // console.log(e.target.getStage());
     if (clickedOnEmpty) {
-      selectShape(null);
+      setSelectShapeId(null);
     }
   };
 
@@ -234,11 +236,14 @@ const App = () => {
             <TheText
               key={i}
               textProps={txt}
-              isSelected={txt.id === selectedId}
+              isSelected={txt.id === selectShapeId}
               onSelect={() => {
-                selectShape(txt.id);
+                setSelectShapeId(txt.id);
               }}
               onChange={(newAttrs) => {
+                //The slice() method returns a shallow copy of
+                // a portion of an array The original array will
+                // not be modified
                 const txts = texts.slice();
                 txts[i] = newAttrs;
                 setTexts(txts);
@@ -247,23 +252,23 @@ const App = () => {
           );
         })}
 
-        {rectangles.map((rect, i) => {
-          return (
-            <Rectangle
-              key={i}
-              shapeProps={rect}
-              isSelected={rect.id === selectedId}
-              onSelect={() => {
-                selectShape(rect.id);
-              }}
-              onChange={(newAttrs) => {
-                const rects = rectangles.slice();
-                rects[i] = newAttrs;
-                setRectangles(rects);
-              }}
-            />
-          );
-        })}
+        {/*{rectangles.map((rect, i) => {*/}
+        {/*  return (*/}
+        {/*    <Rectangle*/}
+        {/*      key={i}*/}
+        {/*      shapeProps={rect}*/}
+        {/*      isSelected={rect.id === selectShapeId}*/}
+        {/*      onSelect={() => {*/}
+        {/*        setSelectShapeId(rect.id);*/}
+        {/*      }}*/}
+        {/*      onChange={(newAttrs) => {*/}
+        {/*        const rects = rectangles.slice();*/}
+        {/*        rects[i] = newAttrs;*/}
+        {/*        setRectangles(rects);*/}
+        {/*      }}*/}
+        {/*    />*/}
+        {/*  );*/}
+        {/*})}*/}
       </Layer>
     </Stage>
   );
